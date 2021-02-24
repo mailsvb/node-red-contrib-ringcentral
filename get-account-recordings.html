@@ -1,0 +1,53 @@
+<script type="text/javascript">
+    RED.nodes.registerType('get-account-recordings',{
+        category: 'Ring Central',
+        color: '#FFCC66',
+        defaults: {
+            rccreds: {
+                required: true, 
+                type:"rc-credentials"
+            },
+            name: {
+                value:""
+            }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "font-awesome/fa-commenting-o",
+        label: function() {
+            return this.name||"Ring Central Get Account Recordings";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="get-account-recordings">
+    <div class="form-row">
+        <label for="node-input-rccreds"><i class="icon-tag"></i> Config</label>
+        <input type="text" id="node-input-rccreds" placeholder="Config">
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="get-account-recordings">
+    <p>A node to get all account recordings from RingCentral.</p>
+    <h3>Outputs</h3>
+     <ol class="node-ports">
+         <li>Standard output
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">string</span></dt>
+                 <dd>the standard output of the command.</dd>
+                 <dt>records <span class="property-type">object</span></dt>
+                 <dd>an object containing the meeting recordings of the account.</dd>
+             </dl>
+         </li>
+         <li>Standard error
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">string</span></dt>
+                 <dd>the standard error of the command.</dd>
+             </dl>
+         </li>
+     </ol>
+</script>
