@@ -1,10 +1,10 @@
-# node-red-contrib-ring-central
+# node-red-contrib-ringcentral-api
 
 ## What is it?
 
-A module to bring SMS/MMS capabilities into your Node-RED flows! 
+A module to bring RingCentral API capabilities into your Node-RED flows! 
 
-With the [Ring Central APIs](https://developers.ringcentral.com/) you can send and receive SMS/MMS messages (plus much more) and this module adds this funcionality into your Node-RED flows.
+With the [RingCentral APIs](https://developers.ringcentral.com/) you can send and receive SMS/MMS messages (plus much more) and this module adds this funcionality into your Node-RED flows.
 
 Let's say you are monitoring an API or sensor and you would like to publish an SMS message to your mobile phone every time a certain value is retrieved. Simple - just add an `sms send` node!
 
@@ -12,11 +12,7 @@ Or, maybe you want your flow to take a certain action when you send a specific m
 
 ## Getting Started
 
-You'll need a Ring Central account (the free dev account is good enough), so sign up and then [create a new SMS app](https://developers.ringcentral.com/guide/messaging/quick-start/node) to get the username, password, server, extension, client id, client secret that you'll need in your flows.
-
-## More
-
-Is coming soon... stay tuned!
+You'll need a Ring Central account (the free dev account is good enough), so sign up and then [create a new app](https://developers.ringcentral.com/guide) to get the username, password, server, extension, client id, client secret that you'll need in your flows.
 
 ## Issues
 
@@ -24,4 +20,4 @@ File an issue on GitHub!
 
 ## GitHub
 
-[https://github.com/recursivecodes/node-red-contrib-ring-central](https://github.com/recursivecodes/node-red-contrib-ring-central)
+[https://github.com/mailsvb/node-red-contrib-ringcentral-api](https://github.com/mailsvb/node-red-contrib-ringcentral-api)
