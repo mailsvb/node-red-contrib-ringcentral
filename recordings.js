@@ -24,29 +24,16 @@ module.exports = function(RED) {
                 }
                 node.log(`path[${url}]`);
                 let error = false;
-                node.credsNode.platform.get(url)
-                    .then((resp)=> resp.json())
-                    .then((result)=> {
-                        status = result && result.records;
-                    })
-                    .catch(function(err){
-                        node.error(err);
-                        error = true;
-                    })
-                    .finally(function(){
-                        node.status({fill:"green",shape:"dot",text:"sent"});
-                        setTimeout(() => {
-                            node.status({});
-                        }, 2500);
-
-                        if (!error) {
-                            msg.records = status;
-                            send(msg);
-                        }
-                        if (done) {
-                            done();
-                        }
-                    });
+                node.credsNode.get(url, (data) => {
+                    node.status({fill:"green",shape:"dot",text:"sent"});
+                    setTimeout(() => {
+                        node.status({});
+                    }, 2500);
+                    if (data) {
+                        msg.records = data && data.records;
+                        send(msg);
+                    }
+                });
             };
 
             if( !node.credsNode.platformReady ) {
@@ -69,5 +56,5 @@ module.exports = function(RED) {
             done();        
         });
     }
-    RED.nodes.registerType("get-recordings", GetRecordings);
+    RED.nodes.registerType("recordings", GetRecordings);
 }

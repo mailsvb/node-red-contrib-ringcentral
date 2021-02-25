@@ -4,7 +4,7 @@ module.exports = function(RED) {
     function RingCentralCredentials(n) {
         RED.nodes.createNode(this,n);
         
-        var node = this;
+        const node = this;
         node.username = node.credentials.username;
         node.server = node.credentials.server;
         node.clientid = node.credentials.clientid;
@@ -34,6 +34,43 @@ module.exports = function(RED) {
                 node.error(err);
             });
 
+        async function handleResponse(promiseRequest) {
+            return promiseRequest
+            .then(response => response && response.json())
+            .then(jsonResponse => jsonResponse)
+            .catch(err => {
+                node.error(`handleResponse error ${err}`);
+            });
+        }
+
+        async function getRequest(url) {
+            return handleResponse(node.platform.get(url));
+        }
+
+        async function getAllPages(url, response) {
+            if (!response) {
+                response = await getRequest(url);
+            }
+            if (response && response.navigation) {
+                if (response.navigation.nextPage) {
+                    const result = await getRequest(response.navigation.nextPage.uri);
+                    if (result && result.records) {
+                        response.records = response.records.concat(result.records);
+                    }
+                    response.navigation.nextPage = result.navigation.nextPage;
+                }
+                if (response.navigation.nextPage) {
+                    response = await getAllPages(url, response);
+                }
+            }
+            return response;
+        }
+
+        async function get(url, cb) {
+            const data = await getAllPages(url);
+            cb(data);
+        }
+        node.get = get;
 
         node.on('close', function(removed, done) {
             if (removed) {
@@ -41,9 +78,10 @@ module.exports = function(RED) {
             } else {
                 // This node is being restarted
             }
-            done();        
+            done();
         });
     }
+
     RED.nodes.registerType("rc-credentials", RingCentralCredentials, {
         credentials: {
             username: {type:"text"},

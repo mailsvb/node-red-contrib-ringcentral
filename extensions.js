@@ -1,5 +1,5 @@
 module.exports = function(RED) {
-    function GetMeetings(n) {
+    function GetExtensions(n) {
         RED.nodes.createNode(this, n);
         const node = this;
         node.creds = n.rccreds;
@@ -7,11 +7,14 @@ module.exports = function(RED) {
 
         node.on('input', function(msg, send, done) {
             let status = {};
-            const getAllMeetings = () => {
+            const getAllExtensions = () => {
                 node.status({fill:"green",shape:"ring",text:"sending"});
 
+                const url = '/restapi/v1.0/account/~/extension';
+
+                node.log(`path[${url}]`);
                 let error = false;
-                node.credsNode.get('/restapi/v1.0/account/~/extension/~/meeting', (data) => {
+                node.credsNode.get(url, (data) => {
                     node.status({fill:"green",shape:"dot",text:"sent"});
                     setTimeout(() => {
                         node.status({});
@@ -25,11 +28,11 @@ module.exports = function(RED) {
 
             if( !node.credsNode.platformReady ) {
                 node.credsNode.addEventListener('rc-ready', function(evt) {
-                    getAllMeetings();
+                    getAllExtensions();
                 })
             }
             else {
-                getAllMeetings();
+                getAllExtensions();
             }
             
         });
@@ -43,5 +46,5 @@ module.exports = function(RED) {
             done();        
         });
     }
-    RED.nodes.registerType("get-meetings", GetMeetings);
+    RED.nodes.registerType("extensions", GetExtensions);
 }
