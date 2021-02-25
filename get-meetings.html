@@ -1,6 +1,6 @@
 <script type="text/javascript">
     RED.nodes.registerType('get-meetings',{
-        category: 'Ring Central',
+        category: 'RingCentral',
         color: '#FFCC66',
         defaults: {
             rccreds: {
@@ -13,9 +13,9 @@
         },
         inputs:1,
         outputs:1,
-        icon: "font-awesome/fa-commenting-o",
+        icon: "font-awesome/fa-calendar",
         label: function() {
-            return this.name||"Ring Central Get Meetings";
+            return this.name||"RingCentral Get Meetings";
         }
     });
 </script>
@@ -39,8 +39,8 @@
              <dl class="message-properties">
                  <dt>payload <span class="property-type">string</span></dt>
                  <dd>the standard output of the command.</dd>
-                 <dt>records <span class="property-type">object</span></dt>
-                 <dd>an object containing the meetings of the account.</dd>
+                 <dt>records <span class="property-type">array</span></dt>
+                 <dd> the meetings of the user.</dd>
              </dl>
          </li>
          <li>Standard error

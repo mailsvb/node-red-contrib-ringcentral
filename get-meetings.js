@@ -10,13 +10,15 @@ module.exports = function(RED) {
             const getAllMeetings = () => {
                 node.status({fill:"green",shape:"ring",text:"sending"});
 
+                let error = false;
                 node.credsNode.platform.get('/restapi/v1.0/account/~/extension/~/meeting')
                     .then((resp)=> resp.json())
                     .then((result)=> {
-                        status = result;
+                        status = result && result.records;
                     })
                     .catch(function(err){
                         node.error(err);
+                        error = true;
                     })
                     .finally(function(){
                         node.status({fill:"green",shape:"dot",text:"sent"});
@@ -24,8 +26,10 @@ module.exports = function(RED) {
                             node.status({});
                         }, 2500);
 
-                        msg.deliveryStatus = status;
-                        send(msg);
+                        if (!error) {
+                            msg.records = status;
+                            send(msg);
+                        }
                         if (done) {
                             done();
                         }

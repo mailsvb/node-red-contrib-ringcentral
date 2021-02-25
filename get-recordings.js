@@ -4,19 +4,34 @@ module.exports = function(RED) {
         const node = this;
         node.creds = n.rccreds;
         node.credsNode = RED.nodes.getNode(node.creds);
+        node.source = n.source || 'account';
 
         node.on('input', function(msg, send, done) {
             let status = {};
             const getAllRecordings = () => {
                 node.status({fill:"green",shape:"ring",text:"sending"});
 
-                node.credsNode.platform.get('/restapi/v1.0/account/~/meeting-recordings?meetingStartTimeFrom=0')
+                let url = '/restapi/v1.0/account/~/';
+                if (node.source === 'user') {
+                    url += 'extension/~/';
+                }
+                url += 'meeting-recordings?';
+                if (msg.payload && msg.payload.meetingId && typeof msg.payload.meetingId === 'string') {
+                    url += 'meetingId=';
+                    url += msg.payload.meetingId;
+                } else {
+                    url += 'meetingStartTimeFrom=0';
+                }
+                node.log(`path[${url}]`);
+                let error = false;
+                node.credsNode.platform.get(url)
                     .then((resp)=> resp.json())
                     .then((result)=> {
-                        status = result;
+                        status = result && result.records;
                     })
                     .catch(function(err){
                         node.error(err);
+                        error = true;
                     })
                     .finally(function(){
                         node.status({fill:"green",shape:"dot",text:"sent"});
@@ -24,8 +39,10 @@ module.exports = function(RED) {
                             node.status({});
                         }, 2500);
 
-                        msg.deliveryStatus = status;
-                        send(msg);
+                        if (!error) {
+                            msg.records = status;
+                            send(msg);
+                        }
                         if (done) {
                             done();
                         }
@@ -52,5 +69,5 @@ module.exports = function(RED) {
             done();        
         });
     }
-    RED.nodes.registerType("get-account-recordings", GetRecordings);
+    RED.nodes.registerType("get-recordings", GetRecordings);
 }

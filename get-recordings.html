@@ -1,6 +1,6 @@
 <script type="text/javascript">
-    RED.nodes.registerType('get-account-recordings',{
-        category: 'Ring Central',
+    RED.nodes.registerType('get-recordings',{
+        category: 'RingCentral',
         color: '#FFCC66',
         defaults: {
             rccreds: {
@@ -9,21 +9,31 @@
             },
             name: {
                 value:""
+            },
+            source: {
+                value:"account"
             }
         },
         inputs:1,
         outputs:1,
-        icon: "font-awesome/fa-commenting-o",
+        icon: "font-awesome/fa-video-camera",
         label: function() {
-            return this.name||"Ring Central Get Account Recordings";
+            return this.name||"RingCentral Get Recordings";
         }
     });
 </script>
 
-<script type="text/html" data-template-name="get-account-recordings">
+<script type="text/html" data-template-name="get-recordings">
     <div class="form-row">
         <label for="node-input-rccreds"><i class="icon-tag"></i> Config</label>
         <input type="text" id="node-input-rccreds" placeholder="Config">
+    </div>
+    <div class="form-row">
+        <label for="node-input-source">From</label>
+        <select type="text" id="node-input-source">
+            <option value="account">Account</option>
+            <option value="user">User</option>
+        </select>
     </div>
     <div class="form-row">
         <label for="node-input-name"><i class="icon-tag"></i> Name</label>
@@ -31,16 +41,23 @@
     </div>
 </script>
 
-<script type="text/html" data-help-name="get-account-recordings">
-    <p>A node to get all account recordings from RingCentral.</p>
+<script type="text/html" data-help-name="get-recordings">
+    <p>A node to get all recordings from RingCentral.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd><code>meetingId</code> A meeting ID</dd>
+    </dl>
     <h3>Outputs</h3>
      <ol class="node-ports">
          <li>Standard output
              <dl class="message-properties">
                  <dt>payload <span class="property-type">string</span></dt>
                  <dd>the standard output of the command.</dd>
-                 <dt>records <span class="property-type">object</span></dt>
-                 <dd>an object containing the meeting recordings of the account.</dd>
+                 <dt>records <span class="property-type">array</span></dt>
+                 <dd>containing the meeting recordings of the account.</dd>
              </dl>
          </li>
          <li>Standard error
