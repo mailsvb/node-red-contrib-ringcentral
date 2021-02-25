@@ -2,7 +2,7 @@
 
 ## What is it?
 
-A module to bring RingCentral API capabilities into your Node-RED flows! 
+A module to bring RingCentral API capabilities into your Node-RED flows! It is based on the work from [Todd Sharp](https://github.com/recursivecodes/node-red-contrib-ring-central)
 
 With the [RingCentral APIs](https://developers.ringcentral.com/) you can send and receive SMS/MMS messages (plus much more) and this module adds this funcionality into your Node-RED flows.
 
