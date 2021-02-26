@@ -8,7 +8,14 @@ With the [RingCentral APIs](https://developers.ringcentral.com/) you can send an
 
 Let's say you are monitoring an API or sensor and you would like to publish an SMS message to your mobile phone every time a certain value is retrieved. Simple - just add an `sms send` node!
 
-Or, maybe you want your flow to take a certain action when you send a specific message to your Ring Central number?  Easy - add an `sms receive` node and parse the response! The response object for each message also includes an array of attachments for MMS. So how do you view an attachment? Also easy - just get a signed url for the attachment URL from the `sign url` node and view it in your browser (or use it with `http in`, `template` and `http response` nodes).
+The following nodes are available in this module:
+* `SMS Send`
+* `SMS Receive`
+* `Sign URL`
+* `Get Meetings`
+* `Recordings`
+* `Extensions`
+* `Presence`
 
 ## Getting Started
 
