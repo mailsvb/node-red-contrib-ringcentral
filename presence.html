@@ -1,0 +1,70 @@
+<script type="text/javascript">
+    RED.nodes.registerType('presence',{
+        category: 'RingCentral',
+        color: '#FFCC66',
+        defaults: {
+            rccreds: {
+                required: true, 
+                type:"rc-credentials"
+            },
+            name: {
+                value:""
+            },
+            source: {
+                value:"user"
+            }
+        },
+        inputs:1,
+        outputs:1,
+        icon: "font-awesome/fa-video-camera",
+        label: function() {
+            return this.name||"RingCentral Get Presence";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="presence">
+    <div class="form-row">
+        <label for="node-input-rccreds"><i class="icon-tag"></i> Config</label>
+        <input type="text" id="node-input-rccreds" placeholder="Config">
+    </div>
+    <div class="form-row">
+        <label for="node-input-source">From</label>
+        <select type="text" id="node-input-source">
+            <option value="account">Account</option>
+            <option value="user">User</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="presence">
+    <p>A node to get presence state from RingCentral.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">object</span>
+        </dt>
+        <dd><code>userId</code> A user ID</dd>
+    </dl>
+    <h3>Outputs</h3>
+     <ol class="node-ports">
+         <li>Standard output
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">string</span></dt>
+                 <dd>the standard output of the command.</dd>
+                 <dt>presence <span class="property-type">object|array</span></dt>
+                 <dd>containing the single presence state object of a user or an array of all user presence state objects.</dd>
+             </dl>
+         </li>
+         <li>Standard error
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">string</span></dt>
+                 <dd>the standard error of the command.</dd>
+             </dl>
+         </li>
+     </ol>
+</script>
