@@ -27,9 +27,7 @@ module.exports = function(RED) {
             };
 
             if( !node.credsNode.platformReady ) {
-                node.credsNode.addEventListener('rc-ready', function(evt) {
-                    getAllExtensions();
-                })
+                node.error(node.credsNode.lastError);
             }
             else {
                 getAllExtensions();

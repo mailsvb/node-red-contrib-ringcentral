@@ -41,9 +41,7 @@ module.exports = function(RED) {
             };
 
             if( !node.credsNode.platformReady ) {
-                node.credsNode.addEventListener('rc-ready', function(evt) {
-                    sendSms();
-                })
+                node.error(node.credsNode.lastError);
             }
             else {
                 sendSms();

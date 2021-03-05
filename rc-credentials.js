@@ -17,6 +17,7 @@ module.exports = function(RED) {
         });
         
         node.platformReady = false;
+        node.lastError = null;
 
         node.platform = rcsdk.platform();
         node.platform.login({
@@ -26,11 +27,9 @@ module.exports = function(RED) {
             })
             .then(function(resp) {
                 node.platformReady = true;
-                node.emit("rc-ready", {
-                    platform: node.platform
-                });
             })
             .catch(function(err) {
+                node.lastError = err;
                 node.error(err);
             });
 
