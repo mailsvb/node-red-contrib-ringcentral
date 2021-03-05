@@ -23,7 +23,7 @@ module.exports = function(RED) {
                     url += 'meetingStartTimeFrom=0';
                 }
                 node.log(`path[${url}]`);
-                let error = false;
+
                 node.credsNode.get(url, (data) => {
                     node.status({fill:"green",shape:"dot",text:"sent"});
                     setTimeout(() => {
@@ -42,7 +42,6 @@ module.exports = function(RED) {
             else {
                 getAllRecordings();
             }
-            
         });
 
         node.on('close', function(removed, done) {
@@ -51,7 +50,7 @@ module.exports = function(RED) {
             } else {
                 // This node is being restarted
             }
-            done();        
+            done();
         });
     }
     RED.nodes.registerType("recordings", GetRecordings);

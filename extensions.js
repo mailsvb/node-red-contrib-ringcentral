@@ -13,7 +13,7 @@ module.exports = function(RED) {
                 const url = '/restapi/v1.0/account/~/extension';
 
                 node.log(`path[${url}]`);
-                let error = false;
+
                 node.credsNode.get(url, (data) => {
                     node.status({fill:"green",shape:"dot",text:"sent"});
                     setTimeout(() => {
@@ -41,7 +41,7 @@ module.exports = function(RED) {
             } else {
                 // This node is being restarted
             }
-            done();        
+            done();
         });
     }
     RED.nodes.registerType("extensions", GetExtensions);
